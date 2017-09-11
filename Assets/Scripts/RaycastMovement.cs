@@ -23,40 +23,47 @@ public class RaycastMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(GameLogic.tourBegun == true){
 		
-		Vector3 forwardDir = raycastHolder.transform.TransformDirection (Vector3.forward) * 100;
-		//Debug.DrawRay (raycastHolder.transform.position, forwardDir, Color.green);
+			Vector3 forwardDir = raycastHolder.transform.TransformDirection (Vector3.forward) * 100;
+			//Debug.DrawRay (raycastHolder.transform.position, forwardDir, Color.green);
 
-		if (Physics.Raycast (raycastHolder.transform.position, (forwardDir), out hit)) {
+			if (Physics.Raycast (raycastHolder.transform.position, (forwardDir), out hit)) {
 
-			if (hit.collider.gameObject.tag == "movementCapable") {
-				ManageIndicator ();
-				if (hit.distance <= maxMoveDistance) { //If we are close enough
+				if (hit.collider.gameObject.tag == "movementCapable") {
+					ManageIndicator ();
+					if (hit.distance <= maxMoveDistance) { //If we are close enough
 
-					//If the indicator isn't active already make it active.
-					if (raycastIndicator.activeSelf == false) {
-						raycastIndicator.SetActive (true);
-					}
-				
-
-					if (Input.GetMouseButtonDown (0)) {
-						if (teleport) {
-							teleportMove (hit.point);
-						} else {
-							DashMove (hit.point);
+						//If the indicator isn't active already make it active.
+						if (raycastIndicator.activeSelf == false) {
+							raycastIndicator.SetActive (true);
 						}
-					}
-				} else {
-					if (raycastIndicator.activeSelf == true) {
-						raycastIndicator.SetActive (false);
+					
+
+						if (Input.GetMouseButtonDown (0)) {
+							if (teleport) {
+								teleportMove (hit.point);
+							} else {
+								DashMove (hit.point);
+							}
+						}
+					} else {
+						if (raycastIndicator.activeSelf == true) {
+							raycastIndicator.SetActive (false);
+						}
 					}
 				}
 			}
-				
 		}
-	
 	}
+
 	public void ManageIndicator() {
+
+		// take the last waypoint I was on and turn its collider on
+		if (WaypointMovement.lastWaypointOn != null) {
+			WaypointMovement.lastWaypointOn.GetComponentInChildren<Collider> ().enabled = true;
+		}
+
 		if (!teleport) {
 			if (moving != true) {
 				raycastIndicator.transform.position = hit.point;

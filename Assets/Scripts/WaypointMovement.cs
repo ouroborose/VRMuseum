@@ -7,7 +7,7 @@ public class WaypointMovement : MonoBehaviour {
 	public GameObject raycastIndicator;
 
 
-	public float height = 2;
+	public float height;
 	public bool teleport = true;
 
 	public float maxMoveDistance = 10;
@@ -41,14 +41,14 @@ public class WaypointMovement : MonoBehaviour {
 			if (!teleport) {
 				iTween.MoveTo (player, 
 					iTween.Hash (
-						"position", new Vector3 (waypoint.transform.position.x, waypoint.transform.position.y + height / 2, waypoint.transform.position.z), 
+						"position", new Vector3 (waypoint.transform.position.x, height, waypoint.transform.position.z), 
 						"time", .2F, 
 						"easetype", "linear"
 					)
 				);
 			} else {
 				player.transform.position = new Vector3 (waypoint.transform.position.x, 
-					waypoint.transform.position.y + height / 2, 
+					waypoint.transform.position.y + height, 
 					waypoint.transform.position.z);
 				
 			}

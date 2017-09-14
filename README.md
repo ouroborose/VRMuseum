@@ -20,3 +20,8 @@ Look on the ground to raycast to any point in the museum. If you look over one o
 ## Built With
 
 GVR Unity SDK v1.60.0
+
+
+## Version Information
+
+1.0.0 - Base experience with 5 stations, each detailing a pivotal device that contributed to the modern VR revolution. One image and one audio clip for each station.
